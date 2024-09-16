@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mentor_connect/images.dart';
+import 'package:mentor_connect/constant/demo_data.dart';
+import 'package:mentor_connect/constant/images.dart';
 import 'package:mentor_connect/main.dart';
-import 'package:mentor_connect/main_screens.dart';
 import 'package:mentor_connect/main_screens/mentor_page.dart';
-import 'package:mentor_connect/main_screens/university_page.dart';
+import 'package:mentor_connect/webinar_screen.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -23,13 +23,16 @@ class HomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 16),
-            // const HomeAppBarSearchBar(),
-            AppBarSearchBar(hint: 'Event')
+            const AppBarSearchBar(hint: 'Event')
           ],
         ),
-        actions: const [
-          NotificationIcon(),
-          SizedBox(width: 10),
+        actions: [
+          NotificationIcon(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpScreen()));
+            },
+          ),
+          SizedBox(width: 16)
         ],
       ),
       body: ListView.separated(
@@ -76,7 +79,6 @@ class UniversityEvent extends StatelessWidget {
     return Column(
       children: [
         ListTile(
-          onTap: () {},
           leading: CircleAvatar(
               radius: 20, backgroundColor: Theme.of(context).colorScheme.onPrimary, backgroundImage: AssetImage(universityLogo)),
           contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
@@ -85,7 +87,7 @@ class UniversityEvent extends StatelessWidget {
             style: TextStyle(fontSize: 13, fontFamily: 'Poppins', fontWeight: FontWeight.w600, color: colorScheme.primary),
           ),
           subtitle: Text(
-            '${postDate}\n',
+            '$postDate\n',
             style: TextStyle(fontSize: 10, fontFamily: 'Poppins', color: colorScheme.outline, fontWeight: FontWeight.w500),
           ),
           trailing: Icon(Icons.more_vert_rounded, size: 18, color: colorScheme.primary),
@@ -114,16 +116,21 @@ class UniversityEvent extends StatelessWidget {
                   ),
                 ],
               )),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Theme.of(context).colorScheme.primary,
-                  boxShadow: const [BoxShadow(color: Color(0xFFC3C4FF), blurRadius: 2, offset: Offset(0, 2))],
-                ),
-                padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 22),
-                child: const Text(
-                  'Attend',
-                  style: TextStyle(fontSize: 12, fontFamily: 'Poppins', fontWeight: FontWeight.w600, color: Colors.white),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const WebinarScreen()));
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Theme.of(context).colorScheme.primary,
+                    boxShadow: const [BoxShadow(color: Color(0xFFC3C4FF), blurRadius: 2, offset: Offset(0, 2))],
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 22),
+                  child: const Text(
+                    'Attend',
+                    style: TextStyle(fontSize: 12, fontFamily: 'Poppins', fontWeight: FontWeight.w600, color: Colors.white),
+                  ),
                 ),
               )
             ],
@@ -134,15 +141,22 @@ class UniversityEvent extends StatelessWidget {
   }
 }
 
+// ----------------------
+
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final Widget? leading;
+  final double? leadingWidth;
   final Widget? title;
   final List<Widget>? actions;
-  const MyAppBar({super.key, this.title, this.actions});
+  const MyAppBar({super.key, this.title, this.actions, this.leading, this.leadingWidth});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       title: title,
+      leadingWidth: leadingWidth,
+      iconTheme: IconThemeData(color: Theme.of(context).colorScheme.primary),
+      leading: leading,
       elevation: 2,
       actions: actions,
       centerTitle: false,

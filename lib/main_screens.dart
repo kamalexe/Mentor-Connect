@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mentor_connect/images.dart';
+import 'package:mentor_connect/constant/images.dart';
 import 'package:mentor_connect/main.dart';
 import 'package:mentor_connect/main_screens/home_page.dart';
 import 'package:mentor_connect/main_screens/mentor_page.dart';
 import 'package:mentor_connect/main_screens/profile_page.dart';
-import 'package:mentor_connect/main_screens/university_page.dart';
+import 'package:mentor_connect/main_screens/freelance_page.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
           const BottomNavigationBarItem(
             label: 'Freelance',
             icon: AppSVGIcon(iconPath: IconPaths.briefcase, size: 24.0),
-            activeIcon: AppSVGIcon(iconPath: IconPaths.briefcase, size: 24.0),
+            activeIcon: AppSVGIcon(iconPath: IconPaths.briefcase1, size: 24.0),
           ),
           BottomNavigationBarItem(
             label: 'Profile',
@@ -78,63 +78,3 @@ class _MyHomePageState extends State<MyHomePage> {
 
 // _________
 
-class UniversityEventModel {
-  final String universityName;
-  final String postImage;
-  final String universityLogo;
-  final String postDate;
-  final String eventTime;
-  final String eventDate;
-
-  UniversityEventModel({
-    required this.universityName,
-    required this.postImage,
-    required this.universityLogo,
-    required this.postDate,
-    required this.eventTime,
-    required this.eventDate,
-  });
-}
-
-final List<UniversityEventModel> universityEvents = [
-  UniversityEventModel(
-    universityName: 'Punjab University',
-    postImage: ImagePaths.liveWebinar,
-    universityLogo: ImagePaths.panjabUniv,
-    postDate: '2 days ago',
-    eventTime: '10:30 - 12:00 PM',
-    eventDate: '24 Aug, 2024 - Monday',
-  ),
-  UniversityEventModel(
-    universityName: 'IIT Kanpur',
-    postImage: ImagePaths.liveWebinar2,
-    universityLogo: ImagePaths.images1,
-    postDate: '5 days ago',
-    eventTime: '11:00 - 01:00 PM',
-    eventDate: '20 Aug, 2024 - Friday',
-  ),
-  UniversityEventModel(
-    universityName: 'IIT Bombay',
-    postImage: ImagePaths.image2,
-    universityLogo: ImagePaths.channelsProfile,
-    postDate: '1 week ago',
-    eventTime: '09:00 - 11:30 AM',
-    eventDate: '18 Aug, 2024 - Wednesday',
-  ),
-  UniversityEventModel(
-    universityName: 'Harvard University',
-    postImage: ImagePaths.tap,
-    universityLogo: ImagePaths.channelsProfile,
-    postDate: '3 days ago',
-    eventTime: '02:00 - 03:30 PM',
-    eventDate: '22 Aug, 2024 - Thursday',
-  ),
-  UniversityEventModel(
-    universityName: 'Stanford University',
-    postImage: ImagePaths.maxResDefault,
-    universityLogo: ImagePaths.bennettLogo,
-    postDate: '4 days ago',
-    eventTime: '12:00 - 01:30 PM',
-    eventDate: '23 Aug, 2024 - Friday',
-  ),
-];

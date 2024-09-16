@@ -14,6 +14,7 @@ class IconPaths {
   static const String booking1 = 'assets/icons/booking (1).svg';
   static const String booking = 'assets/icons/booking.svg';
   static const String briefcase = 'assets/icons/briefcase.svg';
+  static const String briefcase1 = 'assets/icons/briefcase 1.svg';
   static const String calendarStar = 'assets/icons/calendar-star.svg';
   static const String cameraMovie = 'assets/icons/camera-movie.svg';
   static const String employeeManAlt1 = 'assets/icons/employee-man-alt (1).svg';
@@ -39,6 +40,10 @@ class IconPaths {
   static const String user = 'assets/icons/user.svg';
   static const String videoSlash = 'assets/icons/video-slash.svg';
   static const String volumeMute = 'assets/icons/volume-mute.svg';
+  static const String saveFill = 'assets/icons/save_fill.svg';
+  static const String saveOutline = 'assets/icons/save_oultine.svg';
+  static const String messages1 = 'assets/icons/messages 1.svg';
+  static const String sendMessage = 'assets/icons/sendMessahe.svg';
 }
 
 class ImagePaths {
@@ -54,4 +59,11 @@ class ImagePaths {
   static const String liveWebinar = 'assets/images/live_webinar.png';
   static const String liveWebinar2 = 'assets/images/webinar2.png';
   static const String panjabUniv = 'assets/images/panjab_univ.png';
+  static const String verify1 = 'assets/images/verify 1.png';
+  static const String company1 = 'assets/images/algo_prep_logo 1.png';
+  static const String company2 = 'assets/images/microsoft.png';
+  static const String mentorOnVideo = 'assets/images/mentorOnVideo.png';
+  static const String mentiOnVideo = 'assets/images/mentiOnVideo.png';
+  static const String demoWebinar = 'assets/images/demo_webinar.png';
+  static const String google = 'assets/images/google.png';
 }

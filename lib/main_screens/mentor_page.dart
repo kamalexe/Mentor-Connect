@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mentor_connect/app_widget.dart';
-import 'package:mentor_connect/images.dart';
+import 'package:mentor_connect/constant/demo_data.dart';
+import 'package:mentor_connect/theme/app_widget.dart';
+import 'package:mentor_connect/constant/images.dart';
 import 'package:mentor_connect/main.dart';
+import 'package:mentor_connect/mentor_ship_detail_view.dart';
 
 class MentorPage extends StatefulWidget {
   const MentorPage({super.key});
@@ -112,7 +114,10 @@ class MentorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => MentorShipDetailView(mentor: mentor)));
+        // onTap!();
+      },
       child: Container(
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(color: Theme.of(context).colorScheme.primaryContainer, borderRadius: BorderRadius.circular(10)),
@@ -124,6 +129,7 @@ class MentorCard extends StatelessWidget {
                 const SizedBox(width: 8),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
                       mentor.name,
@@ -206,64 +212,3 @@ class FilterButton extends StatelessWidget {
   }
 }
 
-class MentorModel {
-  final String name;
-  final String title;
-  final String description;
-  final String profileImagePath;
-  final String rating;
-
-  MentorModel({
-    required this.name,
-    required this.title,
-    required this.description,
-    required this.profileImagePath,
-    required this.rating,
-  });
-
-  // Optionally, you can add methods for serialization/deserialization if needed
-  factory MentorModel.fromJson(Map<String, dynamic> json) {
-    return MentorModel(
-      name: json['name'] as String,
-      title: json['title'] as String,
-      description: json['description'] as String,
-      profileImagePath: json['profileImagePath'] as String,
-      rating: json['rating'] as String,
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'title': title,
-      'description': description,
-      'profileImagePath': profileImagePath,
-      'rating': rating,
-    };
-  }
-}
-
-// List of demo MentorModel instances
-List<MentorModel> demoMentors = [
-  MentorModel(
-    name: 'Aman Dhattarwal',
-    rating: '4.7',
-    title: 'Founder of Apna College',
-    profileImagePath: ImagePaths.channelsProfile,
-    description: '9Million+ students ❤️| Making students Tech Job ready | Owner of Apna College | 22 TEDx | 100+ Seminars',
-  ),
-  MentorModel(
-    name: 'Nishant Chahar',
-    rating: '4.8',
-    title: 'SDE at Microsoft',
-    profileImagePath: ImagePaths.image1,
-    description: 'Building @Tayyari | Ex-Microsoft | 400k+ Subs on YT | NSIT',
-  ),
-  MentorModel(
-    name: 'Alakh Panday(Physics wallah)',
-    rating: '5.0',
-    title: 'Founder and CEO of PW',
-    profileImagePath: ImagePaths.image2,
-    description: 'Mission to Empower 25 Crore Youth of BHARAT by 2030',
-  ),
-];
