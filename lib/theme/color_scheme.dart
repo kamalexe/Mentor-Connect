@@ -6,8 +6,8 @@ const ColorScheme blueColorScheme = ColorScheme(
   onPrimary: Colors.white, // Contrast with primary
   primaryContainer: Color(0xFFF0F0FE), // Darker variation of primary
   onPrimaryContainer: Color(0xFFA3A4E9), // Contrast with primary container
-  secondary: Color(0xFF5E60CE), // Same as primary
-  onSecondary: Colors.white, // Contrast with secondary
+  secondary: Color(0xFF898BFF), // Same as primary
+  onSecondary: Color(0xFFE0E0E0), // Contrast with secondary
   secondaryContainer: Color(0xFF4A4BB5), // Darker version of primary
   onSecondaryContainer: Colors.white, // Contrast with secondary container
   tertiaryContainer: Color(0xFF6F71DE), // Slightly lighter than primary

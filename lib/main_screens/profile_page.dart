@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:mentor_connect/constant/images.dart';
 import 'package:mentor_connect/main.dart';
 
@@ -31,8 +32,9 @@ class ProfilePage extends StatelessWidget {
               children: [
                 const UserProfileAppBar(),
                 TabBar.secondary(
-                  labelStyle: TextStyle(fontSize: 10, color: colorScheme.primary),
+                  labelStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: colorScheme.primary),
                   unselectedLabelColor: colorScheme.outlineVariant,
+                  unselectedLabelStyle: TextStyle(fontSize: 10, color: colorScheme.outline),
                   tabs: myTabs,
                 ),
               ],
@@ -71,15 +73,15 @@ class SwitchModeButton extends StatelessWidget {
     return Row(
       children: [
         Container(
-          padding: const EdgeInsets.all(5),
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: colorScheme.primaryContainer),
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: colorScheme.primaryContainer),
           child: Center(child: AppSVGIcon(iconPath: iconPath, size: 20)),
         ),
         const SizedBox(width: 10),
         Expanded(
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: colorScheme.primaryContainer),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: colorScheme.primaryContainer),
             child: Text(title, style: const TextStyle(fontSize: 10)),
           ),
         )
@@ -93,16 +95,38 @@ class AboutWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [Text('About', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)), AppIconButtonFilled(icon: Icons.edit)],
-        ),
+        ProfileHeadingUnderLine(title: 'About', onTap: () {}),
         Padding(
           padding: EdgeInsets.only(right: 80.0),
           child: Text('Building @Tayyari | Ex-Microsoft | 400k+ Subs on YT | NSIT', style: TextStyle(fontSize: 12)),
         )
+      ],
+    );
+  }
+}
+
+class ProfileHeadingUnderLine extends StatelessWidget {
+  final String title;
+  final double width;
+  final void Function() onTap;
+
+  const ProfileHeadingUnderLine({super.key, required this.title, required this.onTap, this.width = 26.0});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(title, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
+            Container(height: 2, width: width, color: Theme.of(context).colorScheme.primary)
+          ],
+        ),
+        AppIconButtonFilled(icon: Icons.edit, onPressed: onTap)
       ],
     );
   }
@@ -115,13 +139,8 @@ class ExperienceListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('Experience', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
-            AppIconButtonFilled(icon: Icons.edit)
-          ],
-        ),
+        ProfileHeadingUnderLine(title: 'Experience', width: 42, onTap: () {}),
+        const SizedBox(height: 8),
         ListView.separated(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -214,7 +233,7 @@ class UserProfileAppBar extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Nishant Chahar', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: colorScheme.primary)),
-                  Text('SDE at Microsoft', style: TextStyle(fontSize: 10, color: colorScheme.outlineVariant)),
+                  Text('SDE at Microsoft', style: TextStyle(fontSize: 10, color: colorScheme.outline)),
                 ],
               ),
             ],

@@ -44,6 +44,7 @@ class IconPaths {
   static const String saveOutline = 'assets/icons/save_oultine.svg';
   static const String messages1 = 'assets/icons/messages 1.svg';
   static const String sendMessage = 'assets/icons/sendMessahe.svg';
+  static const String ellipseLogin = 'assets/icons/Ellipse login.svg';
 }
 
 class ImagePaths {
@@ -66,4 +67,14 @@ class ImagePaths {
   static const String mentiOnVideo = 'assets/images/mentiOnVideo.png';
   static const String demoWebinar = 'assets/images/demo_webinar.png';
   static const String google = 'assets/images/google.png';
+  static const String webinarViewer1 = 'assets/images/webinar_viewer (1).png';
+  static const String webinarViewer2 = 'assets/images/webinar_viewer (2).png';
+  static const String webinarViewer3 = 'assets/images/webinar_viewer (3).png';
+  static const String webinarViewer4 = 'assets/images/webinar_viewer (4).png';
+  static const String webinarViewer5 = 'assets/images/webinar_viewer (5).png';
+  static const String learnFormMentor = 'assets/images/learn-form-mentor.png';
+  static const String mentorConnect = 'assets/images/mentor-connect.png';
+  static const String whatProfession = 'assets/images/what-profession.png';
+  static const String event3 = 'assets/images/event3.png';
+  static const String company3 = 'assets/images/company3.jpg';
 }

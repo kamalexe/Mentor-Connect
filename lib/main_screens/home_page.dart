@@ -3,6 +3,7 @@ import 'package:mentor_connect/constant/demo_data.dart';
 import 'package:mentor_connect/constant/images.dart';
 import 'package:mentor_connect/main.dart';
 import 'package:mentor_connect/main_screens/mentor_page.dart';
+import 'package:mentor_connect/sign_up_screen.dart';
 import 'package:mentor_connect/webinar_screen.dart';
 
 class HomePage extends StatelessWidget {
@@ -12,45 +13,42 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar(
-        title: Row(
+        title: Padding(
+          padding: const EdgeInsets.only(bottom: 12.0, top: 3),
+          child: Row(
+            children: [
+              Text('Events', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary)),
+              const SizedBox(width: 16),
+              const AppBarSearchBar(hint: 'Event')
+            ],
+          ),
+        ),
+        actions: [NotificationIcon(onTap: () {}), const SizedBox(width: 16)],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
           children: [
-            Text(
-              'Events',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.primary,
-              ),
+            const Divider(height: 1),
+            ListView.separated(
+              shrinkWrap: true, // Allows it to work within other scrollable widgets
+              itemCount: universityEvents.length,
+              padding: const EdgeInsets.only(left: 12, right: 12, top: 12),
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                final event = universityEvents[index];
+                return UniversityEvent(
+                  universityName: event.universityName,
+                  postImage: event.postImage,
+                  universityLogo: event.universityLogo,
+                  postDate: event.postDate,
+                  eventTime: event.eventTime,
+                  eventDate: event.eventDate,
+                );
+              },
+              separatorBuilder: (context, index) => const Divider(),
             ),
-            const SizedBox(width: 16),
-            const AppBarSearchBar(hint: 'Event')
           ],
         ),
-        actions: [
-          NotificationIcon(
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpScreen()));
-            },
-          ),
-          SizedBox(width: 16)
-        ],
-      ),
-      body: ListView.separated(
-        shrinkWrap: true, // Allows it to work within other scrollable widgets
-        itemCount: universityEvents.length,
-        padding: const EdgeInsets.only(left: 12, right: 12, top: 12),
-        itemBuilder: (context, index) {
-          final event = universityEvents[index];
-          return UniversityEvent(
-            universityName: event.universityName,
-            postImage: event.postImage,
-            universityLogo: event.universityLogo,
-            postDate: event.postDate,
-            eventTime: event.eventTime,
-            eventDate: event.eventDate,
-          );
-        },
-        separatorBuilder: (context, index) => const Divider(),
       ),
     );
   }
@@ -78,23 +76,38 @@ class UniversityEvent extends StatelessWidget {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Column(
       children: [
-        ListTile(
-          leading: CircleAvatar(
-              radius: 20, backgroundColor: Theme.of(context).colorScheme.onPrimary, backgroundImage: AssetImage(universityLogo)),
-          contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-          title: Text(
-            universityName,
-            style: TextStyle(fontSize: 13, fontFamily: 'Poppins', fontWeight: FontWeight.w600, color: colorScheme.primary),
+        Container(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                  radius: 20, backgroundColor: Theme.of(context).colorScheme.onPrimary, backgroundImage: AssetImage(universityLogo)),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      universityName,
+                      style: TextStyle(fontSize: 13, fontFamily: 'Poppins', fontWeight: FontWeight.w600, color: colorScheme.primary),
+                    ),
+                    Text(
+                      postDate,
+                      style: TextStyle(fontSize: 10, fontFamily: 'Poppins', color: colorScheme.outline, fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+              ),
+              Icon(Icons.more_vert_rounded, size: 18, color: colorScheme.primary)
+            ],
           ),
-          subtitle: Text(
-            '$postDate\n',
-            style: TextStyle(fontSize: 10, fontFamily: 'Poppins', color: colorScheme.outline, fontWeight: FontWeight.w500),
-          ),
-          trailing: Icon(Icons.more_vert_rounded, size: 18, color: colorScheme.primary),
         ),
+        const SizedBox(height: 12),
         Padding(
           padding: const EdgeInsets.symmetric(),
-          child: Image.asset(postImage, fit: BoxFit.cover),
+          child: Image.asset(postImage, fit: BoxFit.fill),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 7),
@@ -157,7 +170,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       leadingWidth: leadingWidth,
       iconTheme: IconThemeData(color: Theme.of(context).colorScheme.primary),
       leading: leading,
-      elevation: 2,
+      elevation: 0,
+      scrolledUnderElevation: 0,
       actions: actions,
       centerTitle: false,
       shadowColor: Colors.white,

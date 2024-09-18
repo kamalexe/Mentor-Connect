@@ -5,6 +5,7 @@ import 'package:mentor_connect/theme/app_widget.dart';
 import 'package:mentor_connect/constant/images.dart';
 import 'package:mentor_connect/main.dart';
 import 'package:mentor_connect/main_screens/home_page.dart';
+import 'package:text_scroll/text_scroll.dart';
 
 class MentorShipDetailView extends StatefulWidget {
   final MentorModel mentor;
@@ -17,9 +18,9 @@ class MentorShipDetailView extends StatefulWidget {
 class _MentorShipDetailViewState extends State<MentorShipDetailView> {
   String? selectedAppointment;
   String? selectedDate;
-  int selectedDateIndex = 0;
-  int selectedTimeIndex = 0;
-  int selectedLanguageIndex = 0;
+  int? selectedDateIndex;
+  int? selectedTimeIndex;
+  int? selectedLanguageIndex;
 
   dynamic selectAppointment(String? value) {
     setState(() {
@@ -55,14 +56,21 @@ class _MentorShipDetailViewState extends State<MentorShipDetailView> {
           children: [
             CircleAvatar(radius: 18, backgroundImage: AssetImage(widget.mentor.profileImagePath)),
             const SizedBox(width: 8),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(widget.mentor.name, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: colorScheme.primary)),
-                const SizedBox(height: 4),
-                Text(widget.mentor.title, style: TextStyle(fontSize: 10, color: colorScheme.outline)),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextScroll(
+                    widget.mentor.name,
+                    intervalSpaces: 10,
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: colorScheme.primary),
+                    velocity: Velocity(pixelsPerSecond: Offset(50, 0)),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(widget.mentor.title, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 10, color: colorScheme.outline)),
+                ],
+              ),
             ),
           ],
         ),
@@ -80,37 +88,50 @@ class _MentorShipDetailViewState extends State<MentorShipDetailView> {
               separatorBuilder: (context, index) => const SizedBox(height: 21),
               itemBuilder: (context, index) {
                 String appointmentValue = 'appointment_$index';
-                return MentorShipAppointmentCard(onChanged: selectAppointment, selectedValue: selectedAppointment, value: appointmentValue);
+                return MentorShipAppointmentCard(
+                  title: index.isEven ? 'Career guidance' : 'Resume Review',
+                  onChanged: selectAppointment,
+                  selectedValue: selectedAppointment,
+                  value: appointmentValue,
+                );
               },
             ),
             const DividerHeading(title: 'Book your slot'),
             const SizedBox(height: 12),
-            SizedBox(
-              height: 32,
-              child: ListView.separated(
-                itemCount: demoDates.length,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                scrollDirection: Axis.horizontal,
-                separatorBuilder: (context, index) => const SizedBox(width: 8),
-                itemBuilder: (context, index) => MyChoiceChip(
-                    isSelected: selectedDateIndex == index, label: demoDates[index], onSelected: (bool value) => selectDate(value, index)),
+            GridView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4, mainAxisSpacing: 8, crossAxisSpacing: 8, childAspectRatio: 96 / 42),
+              itemCount: demoDates.length,
+              itemBuilder: (context, index) => GridChip(
+                disabled: false,
+                // disable: true,
+                selected: selectedDateIndex == null ? false : selectedDateIndex == index,
+                title: demoDates[index],
+                onSelected: (newTime) {
+                  selectedDateIndex = index;
+                  setState(() {});
+                },
               ),
             ),
             const SizedBox(height: 12),
-            Padding(
+            GridView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Wrap(
-                spacing: 8.0,
-                runSpacing: 0.0,
-                children: List.generate(timeSlots.length, (index) {
-                  return MyChoiceChip(
-                    isSelected: selectedTimeIndex == index,
-                    label: timeSlots[index],
-                    onSelected: (bool value) {
-                      selectTime(value, index);
-                    },
-                  );
-                }),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4, mainAxisSpacing: 8, crossAxisSpacing: 8, childAspectRatio: 96 / 42),
+              itemCount: timeSlots.length,
+              itemBuilder: (context, index) => GridChip(
+                disabled: timeSlots[index] == 'Booked' || selectedDateIndex == null,
+                selected: selectedTimeIndex == null ? false : selectedTimeIndex == index,
+                title: timeSlots[index],
+                onSelected: (newTime) {
+                  selectedTimeIndex = index;
+                  setState(() {});
+                },
               ),
             ),
             const SizedBox(height: 18),
@@ -119,24 +140,29 @@ class _MentorShipDetailViewState extends State<MentorShipDetailView> {
               child: Text('Preferred language ', style: TextStyle(color: colorScheme.primary, fontSize: 12, fontWeight: FontWeight.w600)),
             ),
             const SizedBox(height: 12),
-            SizedBox(
-              height: 32,
-              child: ListView.separated(
-                itemCount: demoLanguage.length,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                scrollDirection: Axis.horizontal,
-                separatorBuilder: (context, index) => const SizedBox(width: 8),
-                itemBuilder: (context, index) => MyChoiceChip(
-                    isSelected: selectedLanguageIndex == index,
-                    label: demoLanguage[index],
-                    onSelected: (bool value) => selectLanguage(value, index)),
+            GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4, mainAxisSpacing: 8, crossAxisSpacing: 8, childAspectRatio: 96 / 42),
+              itemCount: demoLanguage.length,
+              itemBuilder: (context, index) => GridChip(
+                disabled: false,
+                selected: selectedLanguageIndex == null ? false : selectedLanguageIndex == index,
+                title: demoLanguage[index],
+                onSelected: (newTime) {
+                  selectedLanguageIndex = index;
+                  setState(() {});
+                },
               ),
             ),
+            const SizedBox(height: 18),
           ],
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12),
         child: AppFilledButton(
           title: 'Book',
           onPressed: selectedAppointment != null
@@ -155,6 +181,70 @@ class _MentorShipDetailViewState extends State<MentorShipDetailView> {
 }
 
 // ___
+
+class GridChip extends StatefulWidget {
+  final bool disabled;
+  final bool selected;
+  final String title;
+  final Function(bool) onSelected;
+
+  const GridChip({
+    Key? key,
+    required this.title,
+    required this.disabled,
+    required this.selected,
+    required this.onSelected,
+  }) : super(key: key);
+
+  @override
+  State<GridChip> createState() => _GridChipState();
+}
+
+class _GridChipState extends State<GridChip> {
+  @override
+  Widget build(BuildContext context) {
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+
+    return GestureDetector(
+      onTap: widget.disabled
+          ? null
+          : () {
+              final newSelectedState = !widget.selected;
+              setState(() {});
+              widget.onSelected(newSelectedState);
+            },
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        decoration: BoxDecoration(
+          color: widget.disabled
+              ? colorScheme.primary.withOpacity(0.5)
+              : widget.selected
+                  ? colorScheme.primary
+                  : colorScheme.primaryContainer,
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            child: Text(
+              widget.title,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 8,
+                color: widget.disabled
+                    ? colorScheme.onPrimary.withOpacity(0.5)
+                    : widget.selected
+                        ? colorScheme.onPrimary
+                        : colorScheme.primary,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class DividerHeading extends StatelessWidget {
   final String title;
@@ -184,12 +274,14 @@ class MentorShipAppointmentCard extends StatelessWidget {
   final Function(String?)? onChanged;
   final String? selectedValue;
   final String value;
+  final String title;
 
   const MentorShipAppointmentCard({
     super.key,
     required this.onChanged,
     required this.selectedValue,
     required this.value,
+    required this.title,
   });
 
   @override
@@ -219,7 +311,7 @@ class MentorShipAppointmentCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
                 Text(
-                  'Career guidance',
+                  title,
                   style: TextStyle(
                     color: colorScheme.primary,
                     fontWeight: FontWeight.bold,
@@ -229,7 +321,7 @@ class MentorShipAppointmentCard extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Container(
-              padding: const EdgeInsets.all(6),
+              padding: const EdgeInsets.only(left: 10, right: 6, top: 6, bottom: 6),
               decoration: BoxDecoration(
                 color: colorScheme.surface,
                 borderRadius: BorderRadius.circular(10),
@@ -239,7 +331,7 @@ class MentorShipAppointmentCard extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      const AppSVGIcon(iconPath: IconPaths.cameraMovie),
+                      AppSVGIcon(iconPath: IconPaths.cameraMovie, color: Theme.of(context).colorScheme.outline),
                       const SizedBox(width: 12),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -311,8 +403,8 @@ class CustomRadioButton extends StatelessWidget {
     bool isSelected = value == selectedValue;
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Container(
-      width: 16,
-      height: 16,
+      width: 18,
+      height: 18,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(color: const Color(0XFFC3C4FF), width: 2.0),
@@ -338,3 +430,146 @@ class ViewProfileButton extends StatelessWidget {
   }
 }
 
+// _____________
+
+class AppBarSearchDelegate extends SearchDelegate<String> {
+  final String? hint;
+
+  AppBarSearchDelegate({this.hint});
+
+  @override
+  String get searchFieldLabel => hint ?? 'Search';
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: const Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: const Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, '');
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    // Implement your search results here
+    return Center(
+      child: Text('Search results for: $query'),
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    // Implement your search suggestions here
+    return ListView(
+      children: [
+        ListTile(
+          leading: const Icon(Icons.search),
+          title: Text('Suggestion for: $query'),
+          onTap: () {
+            // Handle suggestion tap
+            showResults(context);
+          },
+        ),
+      ],
+    );
+  }
+}
+// showSearch(
+//           context: context,
+//           delegate: AppBarSearchDelegate(hint: hint),
+//         );
+
+// Toggle Chip
+class ToggleGridChip extends StatefulWidget {
+  final bool disabled;
+  final bool initialSelected;
+  final String title;
+  final Function(bool) onSelected;
+
+  const ToggleGridChip({
+    Key? key,
+    required this.title,
+    required this.disabled,
+    required this.initialSelected,
+    required this.onSelected,
+  }) : super(key: key);
+
+  @override
+  State<ToggleGridChip> createState() => ToggleGridChipState();
+}
+
+class ToggleGridChipState extends State<ToggleGridChip> {
+  late bool _selected;
+
+  @override
+  void initState() {
+    super.initState();
+    _selected = widget.initialSelected;
+  }
+
+  @override
+  void didUpdateWidget(ToggleGridChip oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.initialSelected != widget.initialSelected) {
+      _selected = widget.initialSelected;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+
+    return GestureDetector(
+      onTap: widget.disabled
+          ? null
+          : () {
+              setState(() {
+                _selected = !_selected;
+              });
+              widget.onSelected(_selected);
+            },
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        decoration: BoxDecoration(
+          color: _selected ? colorScheme.primary : colorScheme.surface,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: _selected ? colorScheme.primary : colorScheme.outline,
+            width: 1,
+          ),
+        ),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            child: Text(
+              widget.title,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 8,
+                color: widget.disabled
+                    ? colorScheme.onSurface.withOpacity(0.5)
+                    : _selected
+                        ? colorScheme.onPrimary
+                        : colorScheme.onSurface,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

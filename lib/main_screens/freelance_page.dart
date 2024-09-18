@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mentor_connect/constant/demo_data.dart';
 import 'package:mentor_connect/theme/app_widget.dart';
 import 'package:mentor_connect/constant/images.dart';
@@ -33,7 +34,7 @@ class FreelancePageState extends State<FreelancePage> {
         shadowColor: Colors.white,
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.white,
-        elevation: 2,
+        elevation: 0,
         centerTitle: true,
         title: Row(
           children: [
@@ -52,9 +53,9 @@ class FreelancePageState extends State<FreelancePage> {
           ],
         ),
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(44),
+          preferredSize: const Size.fromHeight(58),
           child: SizedBox(
-            height: 44,
+            height: 58,
             child: ListView.separated(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               separatorBuilder: (context, index) => const SizedBox(width: 8),
@@ -130,18 +131,26 @@ class GigCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: Text(gig.gigTitle,
-                    overflow: TextOverflow.ellipsis, maxLines: 10, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600)),
+                child: Text(gig.gigTitle, overflow: TextOverflow.ellipsis, maxLines: 10, style: const TextStyle(fontSize: 12)),
               ),
-              Text(gig.price.toString(), style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700)),
+              const SizedBox(width: 16),
+              Row(
+                children: [
+                  Text('₹ ', style: GoogleFonts.arima(fontSize: 12, fontWeight: FontWeight.w700)),
+                  Text(gig.price.toString(), style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
+                ],
+              ),
             ],
           ),
           Text(
             gig.postedTime,
-            style: TextStyle(fontSize: 6, color: colorScheme.outline),
+            style: TextStyle(fontSize: 8, color: colorScheme.outline),
           ),
           const SizedBox(height: 6),
-          HomeServiceDescription(gig.description)
+          Text(
+            '${gig.description}see more',
+            style: TextStyle(fontSize: 10, color: colorScheme.primary),
+          ),
         ],
       ),
     );
@@ -172,4 +181,3 @@ class HomeServiceDescription extends StatelessWidget {
     );
   }
 }
-

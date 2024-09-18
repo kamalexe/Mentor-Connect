@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mentor_connect/constant/images.dart';
 import 'package:mentor_connect/main.dart';
+import 'package:text_scroll/text_scroll.dart';
 
 class WebinarScreen extends StatelessWidget {
   const WebinarScreen({super.key});
@@ -10,11 +11,17 @@ class WebinarScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+      // backgroundColor: Colors.amber,
+      backgroundColor: Color(0XFFF5F5F5),
       appBar: AppBar(
         leadingWidth: 24,
         elevation: 0,
-        title: const Text('SIH 2024 Awareness session with Dr. Abhay Jere ', style: TextStyle(fontSize: 12)),
+        title: const TextScroll(
+          'SIH 2024 Awareness session with Dr. Abhay Jere Sir',
+          intervalSpaces: 10,
+          style: TextStyle(fontSize: 12),
+          velocity: Velocity(pixelsPerSecond: Offset(50, 0)),
+        ),
       ),
       body: Column(
         children: [
@@ -112,7 +119,7 @@ class WebinarAudience extends StatelessWidget {
             top: 6,
             child: AppSVGIcon(
                 iconPath: member.isMuted ? IconPaths.microphoneSlash2 : IconPaths.microphone,
-                color: Theme.of(context).colorScheme.outline,
+                color: Theme.of(context).colorScheme.outline.withOpacity(0.5),
                 size: 12),
           ),
           if (member.isHandRaised)
@@ -132,10 +139,10 @@ class AudioWaveAvatar extends StatefulWidget {
   const AudioWaveAvatar({super.key, required this.assetName});
 
   @override
-  _AudioWaveAvatarState createState() => _AudioWaveAvatarState();
+  AudioWaveAvatarState createState() => AudioWaveAvatarState();
 }
 
-class _AudioWaveAvatarState extends State<AudioWaveAvatar> {
+class AudioWaveAvatarState extends State<AudioWaveAvatar> {
   Color _outerColor = const Color(0XFFF0F0FE);
   Color _innerColor = const Color(0XFFC3C4FF);
   late Timer _timer;
@@ -153,18 +160,20 @@ class _AudioWaveAvatarState extends State<AudioWaveAvatar> {
   }
 
   void _startWaveAnimation() {
-    _timer = Timer.periodic(const Duration(microseconds: 100), (Timer timer) {
-      setState(() {
-        // Toggle between two color pairs to simulate a wave animation
-        if (_outerColor == const Color(0XFFF0F0FE)) {
-          _outerColor = const Color(0XFFE6E6FD);
-          _innerColor = const Color(0XFFB0B1FF);
-        } else {
-          _outerColor = const Color(0XFFF0F0FE);
-          _innerColor = const Color(0XFFC3C4FF);
-        }
+    if (mounted) {
+      _timer = Timer.periodic(const Duration(microseconds: 100), (Timer timer) {
+        setState(() {
+          // Toggle between two color pairs to simulate a wave animation
+          if (_outerColor == const Color(0XFFF0F0FE)) {
+            _outerColor = const Color(0XFFE6E6FD);
+            _innerColor = const Color(0XFFB0B1FF);
+          } else {
+            _outerColor = const Color(0XFFF0F0FE);
+            _innerColor = const Color(0XFFC3C4FF);
+          }
+        });
       });
-    });
+    }
   }
 
   @override
@@ -210,18 +219,14 @@ class WebinarAudienceMember {
   final bool isMuted;
   final bool isHandRaised;
 
-  WebinarAudienceMember({
-    required this.name,
-    required this.assetName,
-    this.isMuted = false,
-    this.isHandRaised = false,
-  });
+  WebinarAudienceMember({required this.name, required this.assetName, this.isMuted = false, this.isHandRaised = false});
 }
 
 // Demo list of WebinarAudienceMembers
 List<WebinarAudienceMember> demoAudienceList = [
-  WebinarAudienceMember(name: "Alice", assetName: ImagePaths.mentiOnVideo, isMuted: false, isHandRaised: true),
-  WebinarAudienceMember(name: "Bob", assetName: ImagePaths.image1, isMuted: true, isHandRaised: false),
-  WebinarAudienceMember(name: "Charlie", assetName: ImagePaths.image2, isMuted: false, isHandRaised: false),
-  WebinarAudienceMember(name: "Diana", assetName: ImagePaths.channelsProfile, isMuted: true, isHandRaised: true),
+  WebinarAudienceMember(name: "Alice", assetName: ImagePaths.webinarViewer1, isMuted: false, isHandRaised: true),
+  WebinarAudienceMember(name: "Bob", assetName: ImagePaths.webinarViewer2, isMuted: true, isHandRaised: false),
+  WebinarAudienceMember(name: "Charlie", assetName: ImagePaths.webinarViewer3, isMuted: false, isHandRaised: false),
+  WebinarAudienceMember(name: "Diana", assetName: ImagePaths.webinarViewer4, isMuted: true, isHandRaised: true),
+  WebinarAudienceMember(name: "Diana", assetName: ImagePaths.webinarViewer5, isMuted: true, isHandRaised: true),
 ];

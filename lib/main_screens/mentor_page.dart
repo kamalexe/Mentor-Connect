@@ -37,15 +37,15 @@ class _MentorPageState extends State<MentorPage> {
         shadowColor: Colors.white,
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.white,
-        elevation: 2,
+        elevation: 0,
         centerTitle: true,
         title: const Row(
           children: [AppBarSearchBar(hint: 'Name/Profession'), SizedBox(width: 12), FilterButton()],
         ),
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(44),
+          preferredSize: const Size.fromHeight(58),
           child: SizedBox(
-            height: 44,
+            height: 58,
             child: ListView.separated(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               separatorBuilder: (context, index) => const SizedBox(width: 8),
@@ -122,6 +122,7 @@ class MentorCard extends StatelessWidget {
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(color: Theme.of(context).colorScheme.primaryContainer, borderRadius: BorderRadius.circular(10)),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
@@ -153,7 +154,7 @@ class MentorCard extends StatelessWidget {
             const SizedBox(height: 15),
             Text(
               mentor.description,
-              style: const TextStyle(fontSize: 10, color: Colors.black),
+              style: const TextStyle(fontSize: 12, color: Colors.black),
             )
           ],
         ),
@@ -211,4 +212,3 @@ class FilterButton extends StatelessWidget {
     );
   }
 }
-

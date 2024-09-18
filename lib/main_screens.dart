@@ -49,18 +49,18 @@ class _MyHomePageState extends State<MyHomePage> {
         items: [
           const BottomNavigationBarItem(
             label: 'Home',
-            icon: AppSVGIcon(iconPath: IconPaths.home, size: 24.0),
-            activeIcon: AppSVGIcon(iconPath: IconPaths.home1, size: 24.0),
+            icon: AppSVGIcon(iconPath: IconPaths.home, size: 18.0),
+            activeIcon: AppSVGIcon(iconPath: IconPaths.home1, size: 18.0),
           ),
           const BottomNavigationBarItem(
-            icon: AppSVGIcon(iconPath: IconPaths.employeeManAlt, size: 24.0),
-            activeIcon: AppSVGIcon(iconPath: IconPaths.employeeManAlt1, size: 24.0),
+            icon: AppSVGIcon(iconPath: IconPaths.employeeManAlt, size: 18.0),
+            activeIcon: AppSVGIcon(iconPath: IconPaths.employeeManAlt1, size: 18.0),
             label: 'Mentor',
           ),
           const BottomNavigationBarItem(
             label: 'Freelance',
-            icon: AppSVGIcon(iconPath: IconPaths.briefcase, size: 24.0),
-            activeIcon: AppSVGIcon(iconPath: IconPaths.briefcase1, size: 24.0),
+            icon: AppSVGIcon(iconPath: IconPaths.briefcase, size: 18.0),
+            activeIcon: AppSVGIcon(iconPath: IconPaths.briefcase1, size: 18.0),
           ),
           BottomNavigationBarItem(
             label: 'Profile',

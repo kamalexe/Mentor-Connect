@@ -40,7 +40,7 @@ class AppFilledButton<T> extends StatelessWidget {
     if (title is String) {
       return Text(
         title as String,
-        style: TextStyle(color: titleColor ?? Theme.of(context).colorScheme.onPrimary),
+        style: TextStyle(color: titleColor ?? Theme.of(context).colorScheme.onPrimary, fontSize: 12),
       );
     } else if (title is Widget) {
       return title as Widget;
@@ -50,24 +50,52 @@ class AppFilledButton<T> extends StatelessWidget {
   }
 }
 
-class AppFilledButtonSmall extends StatelessWidget {
-  final String title;
-  final Function()? onPressed;
+class AppFilledButtonSmall<T> extends StatelessWidget {
+  final T title;
+  final VoidCallback? onPressed;
   final FocusNode? focusNode;
+  final Color? bgColor;
+  final Color? titleColor;
+  final double? borderRadius;
 
-  const AppFilledButtonSmall({super.key, this.onPressed, this.focusNode, required this.title});
+  const AppFilledButtonSmall({
+    super.key,
+    required this.title,
+    this.onPressed,
+    this.focusNode,
+    this.bgColor,
+    this.titleColor,
+    this.borderRadius,
+  });
 
   @override
   Widget build(BuildContext context) {
     return FilledButton(
       onPressed: onPressed,
+      focusNode: focusNode,
       style: ButtonStyle(
-        backgroundColor: WidgetStatePropertyAll<Color>(Theme.of(context).colorScheme.primary),
-        shape: WidgetStatePropertyAll<RoundedRectangleBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0))),
-        // minimumSize: const WidgetStatePropertyAll<Size>(),
+        backgroundColor: WidgetStatePropertyAll<Color?>(bgColor),
+        shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(borderRadius ?? 5.0),
+          ),
+        ),
       ),
-      child: Text(title),
+      child: _buildChild(context),
     );
+  }
+
+  Widget _buildChild(BuildContext context) {
+    if (title is String) {
+      return Text(
+        title as String,
+        style: TextStyle(color: titleColor ?? Theme.of(context).colorScheme.onPrimary),
+      );
+    } else if (title is Widget) {
+      return title as Widget;
+    } else {
+      throw ArgumentError('Title must be either a String or a Widget');
+    }
   }
 }
 
@@ -87,7 +115,7 @@ class MyChoiceChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     return ChoiceChip(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
       label: Text(label, style: const TextStyle(fontSize: 10)),
       selected: isSelected,
       showCheckmark: false,
