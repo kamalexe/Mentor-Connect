@@ -133,3 +133,30 @@ class MyChoiceChip extends StatelessWidget {
     );
   }
 }
+class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final Widget? leading;
+  final double? leadingWidth;
+  final Widget? title;
+  final List<Widget>? actions;
+  const MyAppBar({super.key, this.title, this.actions, this.leading, this.leadingWidth});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: title,
+      leadingWidth: leadingWidth,
+      iconTheme: IconThemeData(color: Theme.of(context).colorScheme.primary),
+      leading: leading,
+      elevation: 0,
+      scrolledUnderElevation: 0,
+      actions: actions,
+      centerTitle: false,
+      shadowColor: Colors.white,
+      backgroundColor: Colors.white,
+      surfaceTintColor: Colors.white,
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}

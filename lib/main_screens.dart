@@ -72,6 +72,25 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
+      // bottomNavigationBar: NavigationBar(
+
+      //   destinations: const [
+      //     Column(
+      //       children: [
+      //         NavigationDestination(icon: AppSVGIcon(iconPath: IconPaths.briefcase, size: 18.0), label: 'Home'),
+      //         NavigationDestination(icon: AppSVGIcon(iconPath: IconPaths.briefcase, size: 18.0), label: 'Home'),
+      //         NavigationDestination(icon: AppSVGIcon(iconPath: IconPaths.briefcase, size: 18.0), label: 'Home'),
+      //         NavigationDestination(icon: AppSVGIcon(iconPath: IconPaths.briefcase, size: 18.0), label: 'Home'),
+      //       ],
+      //     )
+      //   ],
+      // ),
+
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {},
+      //   child: Icon(Icons.search),
+      // ),
     );
   }
 }

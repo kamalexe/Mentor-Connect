@@ -1,0 +1,36 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Flutter",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main.dart"
+        },
+        {
+            "name": "Redmi Note 9 Pro (mobile)",
+            "type": "dart",
+            "request": "attach"
+        },
+        {
+            "name": "mentor_connect",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "mentor_connect (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "mentor_connect (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}
